@@ -23,9 +23,10 @@ class Page
 		$this->options = array_merge($this->defaults, $opts);
 
 		$config = array(
-	    	"tpl_dir"       => $_SERVER["DOCUMENT_ROOT"] . "/views/",
-	    	"cache_dir"     => $_SERVER["DOCUMENT_ROOT"] . "/views-cache/",
-	    	"debug"         => false // set to false to improve the speed
+		    "base_url"      => null,
+		    "tpl_dir"       => $_SERVER['DOCUMENT_ROOT']."/views/",
+		    "cache_dir"     => $_SERVER['DOCUMENT_ROOT']."/views-cache/",
+		    "debug"         => false
 		);
 
 		Tpl::configure($config);
@@ -65,7 +66,7 @@ class Page
 	public function __destruct() 
 	{
 
-		$this->tpl->draw("footer");
+		if ($this->options["footer"]) $this->tpl->draw("footer", false);
 
 	}
 
