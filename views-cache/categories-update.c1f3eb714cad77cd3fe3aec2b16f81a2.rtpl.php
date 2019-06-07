@@ -5,6 +5,13 @@
   <h1>
     Edição de Categoria
   </h1>
+
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/admin/categories">Categorias</a></li>
+    <li class="active">Editar</a></li>
+  </ol>
+
 </section>
 
 <!-- Main content -->
@@ -27,7 +34,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Salvar</button>
           </div>
         </form>
       </div>

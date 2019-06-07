@@ -53,7 +53,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Cadastrar</button>
           </div>
         </form>
       </div>

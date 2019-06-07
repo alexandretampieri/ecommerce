@@ -36,7 +36,7 @@ tr:nth-child(even) {
   		<div class="box box-primary">
             
             <div class="box-header">
-              <a href="/admin/categories/create" class="btn btn-success"><i class="fa fa-plus"></i>  Cadastrar</a>
+              <a href="/admin/categories/create" class="btn btn-success">Cadastrar</a>
             </div>
 
             <div class="box-body no-padding">

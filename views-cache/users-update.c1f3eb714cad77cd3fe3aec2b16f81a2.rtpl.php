@@ -49,7 +49,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Salvar</button>
           </div>
         </form>
       </div>
