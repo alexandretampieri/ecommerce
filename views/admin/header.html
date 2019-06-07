@@ -256,8 +256,22 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/admin/users"><i class="fa fa-user"></i> <span>Usuários</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+        <li><a href="/admin/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
+        <li><a href="/admin/categories"><i class="fa fa-object-group"></i> <span>Categorias</span></a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-music"></i> <span>Categorias</span></a></li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+            <span class="pull-right-container">
+              <i class="fa fa-caret-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Link in level 2</a></li>
+            <li><a href="#">Link in level 2</a></li>
+          </ul>
+        </li>
+
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
@@ -269,7 +283,8 @@ desired effect
             <li><a href="#">Link in level 2</a></li>
           </ul>
         </li>
-        <li><a href="/admin/logout"><i class="fa fa-sign-out"></i> <span>Sair</span></a></li>
+
+        <li><a href="/admin/logout"><i class="glyphicon glyphicon-log-out"></i> <span>Sair</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
