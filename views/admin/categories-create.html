@@ -26,7 +26,7 @@
         <form role="form" action="/admin/categories/create" method="post">
           <div class="box-body">
             <div class="form-group">
-              <label for="descategory">Nome da categoria</label>
+              <label for="descategory">Nome</label>
               <input type="text" class="form-control" id="descategory" name="descategory" placeholder="Digite o nome da categoria">
             </div>
           </div>
