@@ -6,20 +6,14 @@ require_once("vendor/autoload.php");
 
 use \Slim\Slim;
 
-use \Hcode\Page;
-
 
 $app = new Slim();
 
 $app->config("debug", true);
 
-$app->get("/", function() {
-    
-	$page = new Page();
+require_once("functions.php");
 
-	$page->setTpl("index");
-	
-});
+require_once("site.php");
 
 require_once("admin.php");
 

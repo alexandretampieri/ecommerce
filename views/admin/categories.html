@@ -44,7 +44,7 @@ tr:nth-child(even) {
                 <thead>
                   <tr>
                     <th style="width: 10px">Id</th>
-                    <th>Nome da Categoria</th>
+                    <th>Nome</th>
                     <th style="width: 140px">&nbsp;</th>
                   </tr>
                 </thead>

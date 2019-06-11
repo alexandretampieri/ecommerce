@@ -59,7 +59,7 @@ class Sql {
 		$this->setParams($stmt, $params);
 
 		if ($stmt->execute() === FALSE) {
-    		print_r($stmt->errorInfo()); exit;
+    		print_r($stmt->errorInfo());
 		}
 
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
