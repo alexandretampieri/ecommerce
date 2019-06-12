@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Categorias</a></li>
+    <li class="active"><a>Categorias</a></li>
   </ol>
 </section>
 

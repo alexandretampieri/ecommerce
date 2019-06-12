@@ -54,7 +54,8 @@ class Product extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_products_save(:idproduct, :desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :desurl)", 
+		$results = $sql->select(
+			"CALL sp_products_save(:idproduct, :desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :desurl)", 
 			array (
 				":idproduct"=>$this->getidproduct(),
 				":desproduct"=>$this->getdesproduct(),
@@ -170,6 +171,34 @@ class Product extends Model {
 		}
 		
 		$this->checkPhoto();
+
+	}
+
+	public function getFromURL($desurl) 
+	{
+
+		$sql = new Sql();
+
+		$row = $sql->select("SELECT * FROM tb_products WHERE desurl = :desurl LIMIT 1;", [
+			":desurl"=>$desurl
+		]);
+
+		$this->setData($row[0]);
+
+	}
+
+	public function getCategories()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * from tb_productscategories tab1
+			INNER JOIN tb_categories tab2 ON tab1.idcategory = tab2.idcategory
+			WHERE tab1.idproduct = :idproduct
+			ORDER BY descategory;", [
+				":idproduct"=>$this->getidproduct()
+		]);
 
 	}
 
