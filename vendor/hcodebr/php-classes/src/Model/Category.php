@@ -86,41 +86,6 @@ class Category extends Model {
 		implode("", $html));
 	}
 
-	public function getProducts($related = true)
-	{
-
-		$sql = new Sql();
-
-		if ($related) {
-
-			return $sql->select("
-				SELECT * FROM tb_products WHERE idproduct IN (
-					SELECT tab1.idproduct
-					FROM tb_products tab1 INNER JOIN
-						tb_productscategories tab2 ON tab1.idproduct = tab2.idproduct
-					WHERE tab2.idcategory = :idcategory);", 
-				[
-					":idcategory"=>$this->getidcategory()
-			]);
-
-		}
-
-		else {
-
-			return $sql->select("
-				SELECT * FROM tb_products WHERE idproduct NOT IN (
-					SELECT tab1.idproduct
-					FROM tb_products tab1 INNER JOIN
-						tb_productscategories tab2 ON tab1.idproduct = tab2.idproduct
-					WHERE tab2.idcategory = :idcategory);", 
-				[
-					":idcategory"=>$this->getidcategory()
-			]);
-
-		}
-
-	}
-
 	public function addProduct(Product $product)
 	{
 
@@ -143,6 +108,71 @@ class Category extends Model {
 			":idcategory"=>$this->getidcategory(),
 			":idproduct"=>$product->getidproduct()
 		]);
+
+	}
+
+	public function getProducts($related = true)
+	{
+
+		$sql = new Sql();
+
+		if ($related) {
+
+			return $sql->select("
+				SELECT * FROM tb_products WHERE idproduct IN (
+					SELECT tab1.idproduct
+					FROM tb_products tab1 
+					INNER JOIN tb_productscategories tab2 ON tab1.idproduct = tab2.idproduct
+					WHERE tab2.idcategory = :idcategory);", 
+				[
+					":idcategory"=>$this->getidcategory()
+			]);
+
+		}
+
+		else {
+
+			return $sql->select("
+				SELECT * FROM tb_products WHERE idproduct NOT IN (
+					SELECT tab1.idproduct
+					FROM tb_products tab1 
+					INNER JOIN tb_productscategories tab2 ON tab1.idproduct = tab2.idproduct
+					WHERE tab2.idcategory = :idcategory);", 
+				[
+					":idcategory"=>$this->getidcategory()
+			]);
+
+		}
+
+	}
+
+	public function getProductsPage($page = 1, $itemsPerPage = 4)
+	{
+
+		$start =($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS * 
+				FROM tb_products tab1 
+				INNER JOIN tb_productscategories tab2 ON tab1.idproduct = tab2.idproduct
+				INNER JOIN tb_categories tab3 ON tab3.idcategory = tab2.idcategory
+				WHERE tab3.idcategory = :idcategory
+				LIMIT $start, $itemsPerPage;",
+			[
+				":idcategory"=>$this->getidcategory()
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal"); 
+
+		$total = (int) $resultTotal[0]["nrtotal"];
+		
+		return [
+			"data"=>Product::checkList($results),
+			"total"=>$total,
+			"pages"=>ceil($total / $itemsPerPage)
+		];
 
 	}
 
