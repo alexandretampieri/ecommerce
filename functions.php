@@ -1,4 +1,4 @@
-p<?php
+<?php
 
 function formatPrice(float $vlPrice)
 {

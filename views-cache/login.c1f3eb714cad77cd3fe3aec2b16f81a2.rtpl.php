@@ -31,7 +31,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Logue-se para iniciar uma nova sessão</p>
 
     <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
@@ -46,7 +46,7 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> Remember Me
+              <input type="checkbox"> Lembre-me
             </label>
           </div>
         </div>
