@@ -125,6 +125,78 @@ class Cart extends Model {
 
 	}
 
+	public function addProduct(Product $product)
+	{
+
+		$sql = new Sql();
+
+var_dump($this);
+var_dump($product);
+
+
+
+		$sql->query("INSERT INTO tb_cartsproducts (idcart, idproduct) VALUES (:idcart, :idproduct);", [
+			"idcart"=>$this->getidcart(),
+			"idproduct"=>$product->getidproduct()
+		]);
+
+	}
+
+	public function removeProduct(Product $product, $all = false)
+	{
+
+		$sql = new Sql();
+
+		if ($all) {
+
+			$sql->query("
+				UPDATE tb_cartsproducts 
+				SET dtremoved = NOW() 
+				WHERE idcart = :idcart AND 
+					idproduct = :idproduct AND
+					dtremoved IS NULL;", [
+				"idcart"=>$this->getidcart(),
+				"idproduct"=>$product->getidproduct()
+			]);
+
+		}
+
+		else {
+
+			$sql->query("
+				UPDATE tb_cartsproducts 
+				SET dtremoved = NOW() 
+				WHERE idcart = :idcart AND 
+					idproduct = :idproduct AND
+					dtremoved IS NULL LIMIT 1;", [
+				"idcart"=>$this->getidcart(),
+				"idproduct"=>$product->getidproduct()
+			]);
+
+		}
+
+	}
+
+	public function getProducts()
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select("
+			SELECT tab2.idproduct, tab2.desproduct, tab2.vlprice, tab2.vlwidth, tab2.vlheight, tab2.vllength, tab2.vlweight, tab2.desurl, COUNT(*) as nrqtd, SUM(tab2.vlprice) as vltotal
+			FROM tb_cartsproducts tab1
+			INNER JOIN tb_products tab2
+			ON tab1.idproduct = tab2.idproduct
+			WHERE tab1.idcart = :idcart AND
+			tab1.dtremoved IS NULL
+			GROUP BY tab2.idproduct, tab2.desproduct, tab2.vlprice, tab2.vlwidth, tab2.vlheight, tab2.vllength, tab2.vlweight, tab2.desurl
+			ORDER BY tab2.desproduct;", [
+				"idcart"=>$this->getidcart()
+		]);
+
+		return Product::checkList($rows);
+	}
+
 }
 
 ?>
