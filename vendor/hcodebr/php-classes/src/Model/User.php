@@ -21,6 +21,8 @@ class User extends Model {
 
     const MENSAGEM_SENHA = "Não foi possível recuperar sua senha.";
 
+	const ERROR = "UserError";
+
     protected $fields = [
 		"iduser", 
 		"desperson", 
@@ -89,7 +91,9 @@ class User extends Model {
 
 		$db = new Sql();
 
-		$results = $db->select("SELECT * FROM tb_users WHERE deslogin = :LOGIN", 
+		$results = $db->select("
+			SELECT * FROM tb_users
+			WHERE deslogin = :LOGIN", 
 			array(
 				":LOGIN"=>$login
 		));
@@ -104,9 +108,9 @@ class User extends Model {
 
 		if (password_verify($password, $data["despassword"])) {
 
-			$user = new User();
+			$user = new User;
 
-			$user->setData($data);
+			$user->get($data["iduser"]);
 
 			$_SESSION[User::SESSION] = $user->getValues();
 
@@ -132,9 +136,19 @@ class User extends Model {
  
 		if (! User::checkLogin($inadmin)) {
 			
-			header("Location: /admin/login");
+			if ($inadmin) {
 
-			exit;
+				header("Location: /admin/login");
+
+			}
+			
+			else {
+
+				header("Location: /login");
+
+			}
+
+		exit;
 
 		}
 
@@ -181,13 +195,17 @@ class User extends Model {
 		$results = $sql->select(
 			"SELECT * FROM tb_users tab1 
 			INNER JOIN tb_persons tab2 
-			USING(idperson) 
+			USING (idperson) 
 			WHERE tab1.iduser = :iduser", 
 			array(
 				":iduser"=>$iduser
 		));
 
-		$this->setData($results[0]);
+		$data = $results[0];
+
+//		$data["desperson"] = utf8_decode($data["desperson"]);
+
+		$this->setData($data);
 
 	}
 
@@ -363,6 +381,52 @@ class User extends Model {
 			":password"=>$password,
 			":iduser"=>$this->getiduser()
 		));
+
+	}
+
+	public static function setError($msg)
+	{
+
+		$_SESSION[User::ERROR] = $msg;
+
+	}
+
+	public static function getError()
+	{
+
+		if (isset($_SESSION[User::ERROR])) {
+
+			$msg = $_SESSION[User::ERROR];
+		
+		}
+
+		else {
+
+			$msg = "";
+		
+		}
+
+		User::clearError();
+
+		return $msg;
+		
+	}
+
+	public static function clearError()
+	{
+
+		$_SESSION[User::ERROR] = NULL;
+		
+	}
+
+	public static function getPasswordHash($password)
+	{
+
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT, [
+			"cost"=>12
+		]);
+
+		return $passwordHash;
 
 	}
 

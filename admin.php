@@ -9,7 +9,7 @@ use \Hcode\Model\Product;
 
 $app->get("/admin", function() {
     
-    User::VerifyLogin();
+    User::verifyLogin();
 
 	$page = new PageAdmin();
 

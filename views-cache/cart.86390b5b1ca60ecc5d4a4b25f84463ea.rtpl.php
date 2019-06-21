@@ -127,7 +127,7 @@
                             </div>
 
                             <div class="pull-right">
-                                <input type="submit" value="Finalizar Compra" name="proceed" class="checkout-button button alt wc-forward">
+                                <input type="submit" formmethod="get" formaction="/checkout" value="Finalizar Compra" name="proceed" class="button">
                             </div>
 
                         </form>
