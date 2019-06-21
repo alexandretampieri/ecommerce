@@ -13,7 +13,7 @@ class Model {
 		foreach ($data as $key => $value)
 		{
 
-			$this->{"set".$key}($value);
+			$this->{"set" . $key}($value);
 
 		}
 
@@ -25,13 +25,13 @@ class Model {
 
 		$method = substr($name, 0, 3);
 
-		$fieldName = substr($name, 3, strlen($name));
+		$len = strlen($name);
 
-		if (in_array($fieldName, $this->fields))
-		{
+		$fieldName = substr($name, 3, $len);
+
+		if (in_array($fieldName, $this->fields)) {
 			
-			switch ($method)
-			{
+			switch ($method) {
 
 				case "get":
 					return (isset($this->values[$fieldName])) ? $this->values[$fieldName] : NULL;

@@ -24,7 +24,7 @@ class Cart extends Model {
 		"nrdays",
 		"dtregister",
 		"vlsubtotal",
-		"vltotal"
+		"vltotal",
 	];
 
 
@@ -63,6 +63,14 @@ class Cart extends Model {
 				$cart->setToSession();
 
 			}
+
+		}
+
+		if ($cart->getvlsubtotal() === NULL) {
+
+			$cart->setvlsubtotal(0);
+
+			$cart->setvltotal(0);
 
 		}
 
@@ -197,7 +205,17 @@ class Cart extends Model {
 				"idcart"=>$this->getidcart()
 		]);
 
-		return Product::checkList($rows);
+		if (count($rows) > 0) {
+
+			return Product::checkList($rows);
+
+		}
+
+		else {
+
+			return [];
+
+		}
 
 	}
 
@@ -225,6 +243,7 @@ class Cart extends Model {
 		else {
 
 			return [];
+
 		}
 
 	}
@@ -291,6 +310,14 @@ class Cart extends Model {
 
 		else {
 
+			$this->setdeszipcode("");
+
+			$this->setnrdays(0);
+
+			$this->setvlfreight(0);
+
+			$this->save();
+
 		}
 
 	}
@@ -353,7 +380,6 @@ class Cart extends Model {
 
 	public function getValues()
 	{
-
 		$this->getCalculateTotal();
 
 		return parent::getValues();
@@ -367,12 +393,26 @@ class Cart extends Model {
 
 		$totals = $this->getProductsTotals();
 
-		$vlsubtotal = $totals["vlprice"];
-		
-		$vltotal = $vlsubtotal + $this->getvlfreight();
+		if ($totals["nrqtd"] != 0) {
 
-		$this->setvlsubtotal($vlsubtotal);
-		
+			$vlsubtotal = $totals["vlprice"];
+			
+			$vltotal = $vlsubtotal + $this->getvlfreight();
+
+		}
+
+		else {
+
+			$vlsubtotal = 0;
+			
+			$vltotal = 0;
+
+			$this->setvlfreight(0);
+
+		}
+
+		$this->setvlsubtotal($vlsubtotal);;
+			
 		$this->setvltotal($vltotal);
 
 	}

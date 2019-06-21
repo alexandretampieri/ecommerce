@@ -59,8 +59,6 @@ $app->get("/products/:desurl", function($desurl) {
 
 	$product->getFromURL($desurl);
 
-var_dump($_SESSION);
-
 	$page = new Page();
 
 	$page->setTpl("product-detail", [
@@ -73,7 +71,7 @@ var_dump($_SESSION);
 $app->get("/cart", function() {
 
 	$cart = Cart::getFromSession();
-
+	
 	$page = new Page();
 
 	$page->setTpl("cart", [
