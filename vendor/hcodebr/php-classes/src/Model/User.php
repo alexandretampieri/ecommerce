@@ -23,6 +23,8 @@ class User extends Model {
 
 	const ERROR = "UserError";
 
+	const ERROR_REGISTER = "UserErrorRegister";
+
     protected $fields = [
 		"iduser", 
 		"desperson", 
@@ -427,6 +429,54 @@ class User extends Model {
 		]);
 
 		return $passwordHash;
+
+	}
+
+	public static function setErrorRegister($msg)
+	{
+
+		$_SESSION[User::ERROR_REGISTER] = $msg;
+
+	}
+
+	public static function getErrorRegister()
+	{
+
+		if (isset($_SESSION[User::ERROR_REGISTER])) {
+
+			$msg = $_SESSION[User::ERROR_REGISTER];
+		
+		}
+
+		else {
+
+			$msg = "";
+		
+		}
+
+		User::clearErrorRegister();
+
+		return $msg;
+		
+	}
+
+	public static function clearErrorRegister()
+	{
+
+		$_SESSION[User::ERROR_REGISTER] = NULL;
+
+	}
+
+	public static function checkLoginExists($login)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT COUNT(*) FROM tb_users WHERE deslogin = :deslogin", [
+				":deslogin"=>$login
+		]);
+
+		return (count($results) > 0);
 
 	}
 
